@@ -8,17 +8,27 @@ using vll = vector<ll>;
 
 const int MOD = 1e9 + 7;
 
-void solve(int n , int k ,int q , vector<int>& arr) {
-    for(auto it : arr){
-        if(it <= q){
-            it =1;
-        }
-        else{
-            it =0;
+ll solve(int n, int k, int q, vector<int>& arr) {
+    ll ans = 0;
+    ll len = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] <= q) {
+            len++;
+        } 
+        else {
+            if (len >= k) {
+                ll z = len - k + 1;
+                ans += z * (z + 1) / 2;
+            }
+            len = 0;
         }
     }
-    int l =0 ;
-    
+    if(len >= k){
+        ll z = len - k +1;
+        ans += z * (z +1)/2;
+    }
+    return ans;
 }
 
 int main() {
@@ -27,14 +37,18 @@ int main() {
 
     int t;
     cin >> t;
-    int n,k,q;
+
     while (t--) {
-        cin>>n>>k>>q;
-        vector<int >arr(n);
-        for(int i = 0 ; i < n ; i++){
-            cin>>arr[i];
+        int n, k, q;
+        cin >> n >> k >> q;
+
+        vi arr(n);
+
+        for (int i = 0; i < n; i++) {
+            cin >> arr[i];
         }
-        solve(n,k,q,arr);
+
+        cout << solve(n, k, q, arr) << '\n';
     }
 
     return 0;
